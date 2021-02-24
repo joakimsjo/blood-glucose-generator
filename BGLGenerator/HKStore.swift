@@ -13,6 +13,7 @@ class HKStore {
 
     let bglUnit = HKUnit(from: "mg/dL")
     var healtStore: HKHealthStore?
+    let HKMetaThresholdKey = "Threshold"
     
     fileprivate init() {
         if HKHealthStore.isHealthDataAvailable() {
@@ -23,11 +24,19 @@ class HKStore {
     }
     
     
-    func saveBGLMeasure(_ data: BGLDataGenerator.BGLReading) {
+    func saveBGLMeasure(_ data: BGLDataGenerator.BGLReading, _ threshold: String? = nil) {
         let bglType = HKQuantityType.quantityType(forIdentifier: .bloodGlucose)!
         
         let bglQuantity = HKQuantity(unit: bglUnit, doubleValue: data.value * 18)
-        let sample = HKQuantitySample(type: bglType, quantity: bglQuantity, start: data.date, end: data.date)
+        
+        // construct reading meta data
+        var meta = [String:Any]()
+        
+        if let thresholdString = threshold {
+            meta[HKMetaThresholdKey] = thresholdString
+        }
+        
+        let sample = HKQuantitySample(type: bglType, quantity: bglQuantity, start: data.date, end: data.date, metadata: meta)
         
         self.healtStore?.requestAuthorization(toShare: [bglType], read: nil) { success, error in
             if success {
@@ -39,7 +48,7 @@ class HKStore {
                     }
                 }
             } else {
-                self.saveBGLMeasure(data)
+                self.saveBGLMeasure(data, threshold)
             }
         }
     }

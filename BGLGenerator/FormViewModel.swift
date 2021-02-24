@@ -21,7 +21,7 @@ class FormViewModel: ObservableObject {
     // MARK: - Intents
     func generateReadings() {
         self.bglGenerator.generateReadings()
-        self.bglGenerator.readings.forEach { HKStore.shared.saveBGLMeasure($0) }
+        self.bglGenerator.readings.forEach { HKStore.shared.saveBGLMeasure($0, self.bglGenerator.threshold.descriptor) }
         self.readingsGenerated.toggle()
     }
 }

@@ -56,6 +56,11 @@ struct BGLDataGenerator {
         // Maximum value a generated BGL reading can have
         var max: Double = 10.0
         
+        // A string describing the range used to generate BGL readings
+        var descriptor: String {
+            String(format: "%.2f mmol/L - %.2f mmol/L", self.min, self.max)
+        }
+
         func value() -> Double {
             return Double.random(in: self.min...self.max)
         }
