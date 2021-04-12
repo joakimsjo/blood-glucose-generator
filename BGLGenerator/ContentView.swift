@@ -17,6 +17,15 @@ struct ContentView: View {
                     Stepper("min: \(String(format: "%.1f", formVM.bglGenerator.threshold.min))", value: self.$formVM.bglGenerator.threshold.min, in: 0...formVM.bglGenerator.threshold.max, step: 0.1)
                     Stepper("max: \(String(format: "%.1f", formVM.bglGenerator.threshold.max))", value: self.$formVM.bglGenerator.threshold.max, in: formVM.bglGenerator.threshold.min...10, step: 0.1)
                 }
+                
+                Section(header: Text("Chance reading is inside BGL range")) {
+                    HStack {
+                        Text("0%")
+                        Slider(value: self.$formVM.bglGenerator.readingIsSuccessfull, in: 0.0...1.0, step: 0.01)
+                        Text("100%")
+                    }
+                }
+
                 Section(header: Text("Date range")) {
                     DatePicker(
                         selection: self.$formVM.bglGenerator.period.start,

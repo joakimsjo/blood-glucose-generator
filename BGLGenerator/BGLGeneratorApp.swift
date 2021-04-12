@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct BGLGeneratorApp: App {
+    @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification), perform: { _ in
+                appDelegate.scheduleAppRefresh()
+            })
         }
     }
 }
