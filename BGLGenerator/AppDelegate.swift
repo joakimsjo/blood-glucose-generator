@@ -11,7 +11,7 @@ import BackgroundTasks
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     static let generateReadingTaskIdentifier = "com.sjohaug.BGLGenerator.generateReading"
-    static let generateInterval: Double = 60 * 30
+    static let generateInterval: Double = 60 * 2
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         BGTaskScheduler.shared.register(
             forTaskWithIdentifier: AppDelegate.generateReadingTaskIdentifier,
