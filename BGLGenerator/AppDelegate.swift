@@ -11,7 +11,7 @@ import BackgroundTasks
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     static let generateReadingTaskIdentifier = "com.sjohaug.BGLGenerator.generateReading"
-    static let generateInterval: Double = 60 * 2
+    static let generateInterval: Double = 60 * 60 * 24
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         BGTaskScheduler.shared.register(
             forTaskWithIdentifier: AppDelegate.generateReadingTaskIdentifier,
@@ -26,11 +26,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
         queue.addOperation {
-            let threshold = BGLDataGenerator.Threshold(min: 3.5, max: 12.0)
-            let value = threshold.value()
-            let reading = BGLDataGenerator.BGLReading(value: value, date: Date())
-            
-            HKStore.shared.saveBGLMeasure(reading)
+            for i in 1...10 {
+                let threshold = BGLDataGenerator.Threshold(min: 3.5, max: 12.0)
+                let value = threshold.value()
+                let reading = BGLDataGenerator.BGLReading(value: value, date: Calendar.current.date(bySettingHour: 8+i, minute: 0, second: 0, of: Date())!)
+                
+                HKStore.shared.saveBGLMeasure(reading)
+            }
         }
         
         task.expirationHandler = {

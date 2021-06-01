@@ -42,7 +42,7 @@ struct BGLDataGenerator {
         while self.period.range.contains(day) {
             for i in 1...self.readingsPerDay {
                 let value = values.randomElement()!
-                let reading = BGLReading(value: value, date: Calendar.current.date(bySettingHour: i*2, minute: 0, second: 0, of: day)!)
+                let reading = BGLReading(value: value, date: Calendar.current.date(bySettingHour: 8+i, minute: 0, second: 0, of: day)!)
                 readings.append(reading)
             }
             day = Calendar.current.date(byAdding: .day, value: 1, to: day)!

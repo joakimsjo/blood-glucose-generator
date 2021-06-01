@@ -13,12 +13,12 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("BGL Range mmol/L")) {
+                Section(header: Text("Blood glucose range mmol/L")) {
                     Stepper("min: \(String(format: "%.1f", formVM.bglGenerator.threshold.min))", value: self.$formVM.bglGenerator.threshold.min, in: 0...formVM.bglGenerator.threshold.max, step: 0.1)
                     Stepper("max: \(String(format: "%.1f", formVM.bglGenerator.threshold.max))", value: self.$formVM.bglGenerator.threshold.max, in: formVM.bglGenerator.threshold.min...10, step: 0.1)
                 }
                 
-                Section(header: Text("Chance reading is inside BGL range")) {
+                Section(header: Text("Chance reading is inside range")) {
                     HStack {
                         Text("0%")
                         Slider(value: self.$formVM.bglGenerator.readingIsSuccessfull, in: 0.0...1.0, step: 0.01)
@@ -56,7 +56,8 @@ struct ContentView: View {
                     self.formVM.generateReadings()
                 })
             }
-            .navigationBarTitle(Text("BGL Data Generator"))
+            .navigationBarTitle(Text("Blood Glucose Generator"))
+            .navigationBarTitleDisplayMode(.inline)
             .alert(isPresented: self.$formVM.readingsGenerated, content: {
                 Alert(title: Text("Readings generated!"))
             })

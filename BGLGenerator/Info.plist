@@ -23,9 +23,11 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Read access is nessecary to read generated BGL data</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Write access is nessecary to persist generated BGL data to HealthKit</string>
 	<key>UIApplicationSceneManifest</key>
